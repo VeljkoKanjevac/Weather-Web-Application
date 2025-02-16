@@ -19,9 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware('auth')->group(function () {
+    //User rute
+});
+
 
 Route::middleware(['auth', AdminCheckMiddleware::class])->prefix('/admin')->group(function () {
-
+    //Admin rute
 });
 
 
