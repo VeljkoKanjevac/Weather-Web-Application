@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UsersController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -21,12 +22,20 @@ Route::get('/', function () {
 
 
 Route::middleware('auth')->group(function () {
-    //User rute
+    //User rutes
 });
 
-
+//Admin routes
 Route::middleware(['auth', AdminCheckMiddleware::class])->prefix('/admin')->group(function () {
-    //Admin rute
+
+    Route::controller(UsersController::class)->prefix('/user')->name('user.')->group(function () {
+
+        Route::get('all', 'allUsers')->name('all');
+        Route::get('delete/{user}', 'deleteUser')->name('delete');
+        Route::get("block/{user}", 'blockUser')->name('block');
+        Route::get("activate/{user}", 'activateUser')->name('activate');
+    });
+
 });
 
 
